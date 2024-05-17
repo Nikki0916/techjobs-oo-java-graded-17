@@ -1,21 +1,59 @@
 package org.launchcode.techjobs.oo;
 
-public class CoreCompetency extends JobField {
+import java.util.Objects;
 
-    // Constructor using the parent class constructor
-    public CoreCompetency(String value) {
-        super(value);
+public class CoreCompetency {
+
+    private int id;
+    private static int nextId = 1;
+    private String value;
+
+    public CoreCompetency() {
+        this.id = nextId;
+        nextId++;
     }
 
-    // Default constructor
-    public CoreCompetency() {
-        // Call the parent class constructor with a default value
-        super("Data not available");
+    public CoreCompetency(String value) {
+        this();
+        this.value = value;
+    }
+
+    // Custom toString, equals, and hashCode methods:
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CoreCompetency)) return false;
+        CoreCompetency that = (CoreCompetency) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    // TODO: Use the "Generate" tool to add a getter and setter for the 'value' field but
+    //  ONLY a getter for the 'id' field.
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public int getId() {
+        return id;
     }
 }
 
 
-// TODO: Use the "Generate" tool to add a getter and setter for the 'value' field but
-    //  ONLY a getter for the 'id' field.
 
 
