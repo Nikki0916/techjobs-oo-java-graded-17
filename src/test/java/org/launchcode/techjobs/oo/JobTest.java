@@ -1,50 +1,70 @@
 package org.launchcode.techjobs.oo;
-import org.junit.Before;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotEquals;
+import java.lang.reflect.InvocationTargetException;
+
+import static java.lang.System.lineSeparator;
 import static org.junit.Assert.*;
+
 public class JobTest {
     //TODO: Create your unit tests here
-    private Job job1;
-    private Job job2;
 
-    @Before
-    public void setUp() {
-        job1 = new Job();
-        job2 = new Job();
-        testJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
-                new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        job1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
-                new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        job2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
-                new PositionType("Quality control"), new CoreCompetency("Persistence"));
-    }
-
-    //Test the Empty Constructor
     @Test
     public void testSettingJobId() {
-        assertNotEquals(job1.getId(), job2.getId());
+        Job job1 = new Job("Web Developer", new Employer("LaunchCode"), new Location("StL"), new PositionType("Back-end developer"), new CoreCompetency("Java"));
+        Job job2 = new Job("Web Graphics", new Employer("CodeLaunch"), new Location("LtS"), new PositionType("Front-end developer"), new CoreCompetency("Java"));
+        assertNotEquals(job1, job2);
     }
-
-    //***Test the Full Constructor
-    private Job testJob;
 
     @Test
     public void testJobConstructorSetsAllFields() {
-        // Check the class and value of each field
-        assertTrue(testJob instanceof Job);
-        assertEquals("Product tester", testJob.getName());
-        assertEquals("ACME", testJob.getEmployer().getValue());
-        assertEquals("Desert", testJob.getLocation().getValue());
-        assertEquals("Quality control", testJob.getPositionType().getValue());
-        assertEquals("Persistence", testJob.getCoreCompetency().getValue());
+        Job job1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality Control"), new CoreCompetency("Persistence"));
+        assertEquals(job1.getName(), "Product tester");
+        assertEquals(job1.getEmployer().toString(), "ACME");
+        assertEquals(job1.getLocation().toString(), "Desert");
+        assertEquals(job1.getPositionType().toString(), "Quality Control");
+        assertEquals(job1.getCoreCompetency().toString(), "Persistence");
     }
-
-    //Test the equals Method
     @Test
     public void testJobsForEquality() {
-        // Check if the two jobs are equal
-        assertFalse(job1.equals(job2));
+        Job job1 = new Job("Web Graphics", new Employer("CodeLaunch"), new Location("LtS"), new PositionType("Front-end developer"), new CoreCompetency("Java"));
+        Job job2 = new Job("Web Graphics", new Employer("CodeLaunch"), new Location("LtS"), new PositionType("Front-end developer"), new CoreCompetency("Java"));
+        assertNotEquals(job1, job2);
     }
+
+    @Test
+    public void testToStringStartsAndEndsWithNewLine() {
+        Job job1 = new Job("TestJob", new Employer("LaunchCode"), new Location("StL"), new PositionType("TestPosition"), new CoreCompetency("test"));
+        assertTrue(job1.toString().startsWith(lineSeparator()));
+        assertTrue(job1.toString().endsWith(lineSeparator()));
+    }
+
+
+
+    @Test
+    public void testToStringHandlesEmptyField() {
+        Job job1 = new Job("Web Developer", new Employer(""), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        String expectedString1 = lineSeparator() +
+                "ID: " + job1.getId() + "\n" +
+                "Name: Web Developer" + "\n" +
+                "Employer: Data not available" + "\n" +
+                "Location: Desert" + "\n" +
+                "Position Type: Quality control" + "\n" +
+                "Core Competency: Persistence" + lineSeparator();
+        assertEquals(job1.toString(), expectedString1);
+    }
+    @Test
+    public void testToStringContainsCorrectLabelsAndData() {
+        Job job1 = new Job("TestJob", new Employer("LaunchCode"), new Location("StL"), new PositionType("TestPosition"), new CoreCompetency("test"));
+        String expectedString2 = lineSeparator()+
+                "ID: " + job1.getId() + "\n"+
+                "Name: TestJob" + "\n" +
+                "Employer: LaunchCode" + "\n" +
+                "Location: StL" + "\n" +
+                "Position Type: TestPosition" + "\n" +
+                "Core Competency: test" +lineSeparator();
+        assertEquals(job1.toString(), expectedString2);
+    }
+
 }

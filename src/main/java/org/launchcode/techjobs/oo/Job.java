@@ -1,50 +1,122 @@
 package org.launchcode.techjobs.oo;
-import org.junit.Before;
-import org.junit.Test;
+import java.util.Objects;
+import static java.lang.System.lineSeparator;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.*;
-public class JobTest {
-    //TODO: Create your unit tests here
-    private Job job1;
-    private Job job2;
+public class Job {
+    private final int id;
+    private static int nextId = 1;
+    private String name;
+    private Employer employer;
+    private Location location;
+    private PositionType positionType;
+    private CoreCompetency coreCompetency;
+    private static final String empty = "Data not available";
 
-    @Before
-    public void setUp() {
-        job1 = new Job();
-        job2 = new Job();
-        testJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
-                new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        job1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
-                new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        job2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
-                new PositionType("Quality control"), new CoreCompetency("Persistence"));
+    public Job() {
+        id = nextId;
+        nextId++;
+    }
+    public Job(String name, Employer employer, Location location, PositionType positionType, CoreCompetency coreCompetency) {
+        this();
+        this.name = name;
+        this.employer = employer;
+        this.location = location;
+        this.positionType = positionType;
+        this.coreCompetency = coreCompetency;
+    }
+    @Override
+    public boolean equals(Object o) {  // Two objects are equal if they have the same id.
+        if (this == o) return true;
+        if (!(o instanceof Job job)) return false;
+        return getId() == job.getId();
     }
 
-    //Test the Empty Constructor
-    @Test
-    public void testSettingJobId() {
-        assertNotEquals(job1.getId(), job2.getId());
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
-    //***Test the Full Constructor
-    private Job testJob;
-
-    @Test
-    public void testJobConstructorSetsAllFields() {
-        // Check the class and value of each field
-        assertTrue(testJob instanceof Job);
-        assertEquals("Product tester", testJob.getName());
-        assertEquals("ACME", testJob.getEmployer().getValue());
-        assertEquals("Desert", testJob.getLocation().getValue());
-        assertEquals("Quality control", testJob.getPositionType().getValue());
-        assertEquals("Persistence", testJob.getCoreCompetency().getValue());
+    @Override
+    public String toString() {
+        if (Objects.equals(employer.getValue(), "")) {
+            this.employer.setValue(empty);
+        }
+        if (Objects.equals(location.getValue(), "")) {
+            this.location.setValue(empty);
+        }
+        if (Objects.equals(positionType.getValue(), "")) {
+            this.positionType.setValue(empty);
+        }
+        if (Objects.equals(coreCompetency.getValue(), "")) {
+            this.coreCompetency.setValue(empty);
+        }
+        return lineSeparator() +
+                "ID: " + this.id + "\n" +
+                "Name: " + this.name + "\n" +
+                "Employer: " + this.employer + "\n" +
+                "Location: " + this.location + "\n" +
+                "Position Type: " + this.positionType + "\n" +
+                "Core Competency: " + this.coreCompetency + lineSeparator();
     }
 
-    //Test the equals Method
-    @Test
-    public void testJobsForEquality() {
-        // Check if the two jobs are equal
-        assertFalse(job1.equals(job2));
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        if (name.isEmpty()) {
+            return empty;
+        } else {
+            return name;
+        }
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Employer getEmployer() {
+        if (employer.getValue().isEmpty()) {
+            employer.setValue("Data not available");
+        }
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
+
+    public Location getLocation() {
+        if (location.getValue().isEmpty()) {
+            location.setValue("Data not available");
+        }
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public PositionType getPositionType() {
+        if (positionType.getValue().isEmpty()) {
+            positionType.setValue("Data not available");
+        }
+        return positionType;
+    }
+
+    public void setPositionType(PositionType positionType) {
+        this.positionType = positionType;
+    }
+
+    public CoreCompetency getCoreCompetency() {
+        if (coreCompetency.getValue().isEmpty()) {
+            coreCompetency.setValue("Data not available");
+        }
+        return coreCompetency;
+    }
+
+    public void setCoreCompetency(CoreCompetency coreCompetency) {
+        this.coreCompetency = coreCompetency;
     }
 }
