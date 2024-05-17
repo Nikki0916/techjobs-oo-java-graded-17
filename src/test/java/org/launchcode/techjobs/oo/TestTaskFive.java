@@ -48,7 +48,7 @@ public class TestTaskFive extends AbstractTest {
         Method testToStringContainsCorrectLabelsAndDataMethod = null;
 
         try {
-            testToStringContainsCorrectLabelsAndDataMethod = jobTestClass.getMethod("testToStringContainsCorrectLabelsAndData");
+            testToStringContainsCorrectLabelsAndDataMethod = jobTestClass.getMethod("testToStringStartsAndEndsWithNewLine");
         } catch (NoSuchMethodException e) {
             fail("JobTest does not have a testToStringContainsCorrectLabelsAndData method");
         }

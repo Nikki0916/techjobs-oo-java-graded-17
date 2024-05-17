@@ -1,24 +1,21 @@
 package org.launchcode.techjobs.oo;
+import java.util.Objects;
 
-public abstract class JobField {
+
+ abstract class JobField {
 
     private int id;
     private static int nextId = 1;
-    protected String value;
+    private String value;
 
-    // Default constructor
-    public JobField() {
+    // Constructor that takes a String parameter
+    public JobField(String value) {
+        this.value = value;
         id = nextId;
         nextId++;
     }
 
-    // Constructor with value parameter
-    public JobField(String value) {
-        this();
-        this.value = value;
-    }
-
-    // Getters and setters for id and value
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -32,7 +29,6 @@ public abstract class JobField {
     }
 
     // Custom toString, equals, and hashCode methods
-
     @Override
     public String toString() {
         return value;
@@ -48,8 +44,6 @@ public abstract class JobField {
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(id);
     }
 }
-
-
