@@ -41,4 +41,14 @@ public class JobTest {
         Job job2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
         assertNotEquals(job1.getId(), job2.getId());
     }
+
+    @Test
+    public void testToStringStartsAndEndsWithNewLine() {
+        Job job = new Job();
+        String jobString = job.toString();
+        assertEquals(true, jobString.startsWith(System.lineSeparator()));
+        assertEquals(true, jobString.endsWith(System.lineSeparator()));
+    }
+
+
 }
