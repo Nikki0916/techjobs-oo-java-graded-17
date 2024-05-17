@@ -1,97 +1,50 @@
 package org.launchcode.techjobs.oo;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.util.Objects;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
+public class JobTest {
+    //TODO: Create your unit tests here
+    private Job job1;
+    private Job job2;
 
-public class Job {
-
-    private int id;
-    private static int nextId = 1;
-
-    private String name;
-    private Employer employer;
-    private Location location;
-    private PositionType positionType;
-    private CoreCompetency coreCompetency;
-
-    // TODO: Add two constructors - one to initialize a unique ID and a second to initialize the
-    //  other five fields. The second constructor should also call the first in order to initialize
-    //  the 'id' field.
-
-    // Empty constructor to initialize the id field
-    public Job() {
-        id = nextId;
-        nextId++;
-    }
-    // Constructor with 5 parameters
-    public Job(String name, Employer employer, Location location,
-               PositionType positionType, CoreCompetency coreCompetency) {
-        this(); // Call the empty constructor to initialize id
-        this.name = name;
-        this.employer = employer;
-        this.location = location;
-        this.positionType = positionType;
-        this.coreCompetency = coreCompetency;
-    }
-    // TODO: Add custom equals and hashCode methods. Consider two Job objects "equal" when their id fields
-    //  match.
-
-    @Override // Custom equals() method
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Job job)) return false;
-        Job otherJob = (Job) o;
-        return getId() == otherJob.getId();
+    @Before
+    public void setUp() {
+        job1 = new Job();
+        job2 = new Job();
+        testJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
+                new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        job1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
+                new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        job2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
+                new PositionType("Quality control"), new CoreCompetency("Persistence"));
     }
 
-    @Override // Custom hashCode() method
-    public int hashCode() {
-        return Objects.hash(getId());
+    //Test the Empty Constructor
+    @Test
+    public void testSettingJobId() {
+        assertNotEquals(job1.getId(), job2.getId());
     }
 
-    // TODO: Add getters for each field EXCEPT nextId. Add setters for each field EXCEPT nextID
-    //  and id.
+    //***Test the Full Constructor
+    private Job testJob;
 
-    public String getName() {
-        return name;
+    @Test
+    public void testJobConstructorSetsAllFields() {
+        // Check the class and value of each field
+        assertTrue(testJob instanceof Job);
+        assertEquals("Product tester", testJob.getName());
+        assertEquals("ACME", testJob.getEmployer().getValue());
+        assertEquals("Desert", testJob.getLocation().getValue());
+        assertEquals("Quality control", testJob.getPositionType().getValue());
+        assertEquals("Persistence", testJob.getCoreCompetency().getValue());
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Employer getEmployer() {
-        return employer;
-    }
-
-    public void setEmployer(Employer employer) {
-        this.employer = employer;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public PositionType getPositionType() {
-        return positionType;
-    }
-
-    public void setPositionType(PositionType positionType) {
-        this.positionType = positionType;
-    }
-
-    public CoreCompetency getCoreCompetency() {
-        return coreCompetency;
-    }
-
-    public void setCoreCompetency(CoreCompetency coreCompetency) {
-        this.coreCompetency = coreCompetency;
-    }
-
-    public int getId() {
-        return id;
+    //Test the equals Method
+    @Test
+    public void testJobsForEquality() {
+        // Check if the two jobs are equal
+        assertFalse(job1.equals(job2));
     }
 }
